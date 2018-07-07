@@ -1,11 +1,10 @@
-#from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
-from django.core.exceptions import ValidationError
 from django.contrib import messages
 from models import User, Poke
+from django.db.models import Count
 from django.utils import timezone
 from datetime import datetime
-from django.db.models import Count
 
 
 def index(request):
@@ -41,7 +40,7 @@ def register(request):
 		user.created_at = timezone.now()
 		user.save()
 		successes.append('You have successfully registered and may login!')
-		print ("Successful Registration")
+		#print ("I registered")
 		return render(request, 'poke/index.html', {'successes': successes})
 	else:
 		del request.session
@@ -65,12 +64,14 @@ def dashboard(request):
 		user_poke_count = Poke.objects.all().filter(poked=request.session['user_id'])
 		all_users = Poke.objects.filter(poked=request.session['user_id']).exclude(id=request.session['user_id'])
 		user = User.objects.get(id=request.session['user_id'])
+		#all_users_pokes = Poke.objects.exclude(id = request.session['user_id'] ).filter(poked = request.session['user_id'])
 		context = {
 			'users': users, 
 			'pokes': pokes, 
 			'user_poke_count': user_poke_count, 
 			'all_users': all_users,
-			'user': user
+			'user': user,
+		#	'all_users_pokes' : all_users_pokes
 		}
 		return render(request, 'poke/dashboard.html', context)
 	else:
@@ -86,12 +87,10 @@ def poke(request, user_id):
 	poke = Poke()
 	poke.poker = poker
 	poke.poked = poked
-	poke.created_at = timezone.now()
 	poke.counter+=1
 	poke.save()
 	return redirect('/dashboard')
 
 def logout(request):
-	print ("Logging Out")
 	del request.session['user_id']
 	return redirect('/')

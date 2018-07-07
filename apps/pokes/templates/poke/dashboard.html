@@ -15,13 +15,12 @@
 		<h3>You haven't poked anyone yet!</h3>
 	{%else %}
 		<h3> You have been poked: {{user_poke_count.count}} time(s) </h3>
-		<h4>List of people whom you have poked:</h4>
+		<h4>List of people who poked you:</h4>
 		<ul>{% for all_user in all_users %}
-			<li>{{all_user.poker.name}} poked you {{all_user.poker_pks.count}} times.</li>
+			<!--<li>{{all_user.poker.name}} poked you {{all_users_pokes.count}} time(s).</li>-->
+			<li>{{all_user.poker.name}}</li>
 		<br>
 		{%endfor%}</ul>
-		<script>
-		</script>
 	{%endif%}
 	
 	<hr>
