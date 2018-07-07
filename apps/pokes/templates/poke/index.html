@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Login/Registration</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+<center>
+<h1>Poke App..!</h1>
+<hr>
+<div class="col-sm-6">
+
+		<div class="errors" style="display:inline-block;color:red">
+				{% for error in errors %}
+					{{ error }}
+					<br>
+				{% endfor %}
+			</div>
+		<div class="successes" style="display:inline-block;color:green">
+				{% for success in successes %}
+					{{ success}}
+					<br>
+				{% endfor %}
+		</div>
+		<h4>Register</h4>
+
+	<form action="/register" method="post" class="form-control" style="width:400px; height:425px">
+	{%csrf_token %}
+	Name: <input type="text" name="u_name" class="form-control">
+	Alias: <input type="text" name="u_alias" class="form-control">
+	Email: <input type="text" name="email"  class="form-control">
+	Password: <input type="password" name="password"  class="form-control">
+	<h6>*Password must be atleast 8 characters.</h6>
+	Confirm Password: <input type="password" name="cnfm_pswd" class="form-control">
+	Date of Birth: <input type="date" name="birth" class="form-control">
+	<br>
+	<input type="submit" value="Register" class="btn btn-success">
+</form>
+</div>
+<div class="col-sm-6">
+		<h4>Login</h4>
+		<div class="login_errors" style="display:inline-block;color:red">
+		{% for login_error in login_errors %}
+			{{ login_error}}
+			<br>
+		{% endfor %}
+</div>
+<form action="/login" method="post" style="width:400px; height:175px" class="form-control">
+	{%csrf_token %}
+	Email: <input type="email" name="email" class="form-control">
+	Password: <input type="password" name="password" class="form-control">
+	<br>
+	<input type="submit" value="Login" class="btn btn-success">
+</form>
+</div>
+</center>
+</div>
+</body>
+</html>
